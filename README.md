@@ -16,6 +16,8 @@ seqtk sample -s1016 oilMP_S4_L001_R2_001.fastq 1500000 > submp2.fq
 mkdir fastqc
 ls *.fq | xargs -P 1 -tI{} fastqc -o fastqc {}
 
+scp -i mykey -P 32222 avshmelev@92.242.58.92:~/hw_1/multiqc/multiqc_report.html ~/hw_1/
+
 platanus_trim subpe1.fq subpe2.fq
 platanus_internal_trim submp1.fq submp2.fq
 
@@ -37,9 +39,15 @@ platanus assemble -t 1 -f subpe1.fq.trimmed subpe2.fq.trimmed 2> assemble.log
 platanus scaffold -t 1 -c out_contig.fa -IP1 subpe1.fq.trimmed subpe2.fq.trimmed -OP2 submp1.fq.int_trimmed submp2.fq.int_trimmed2> scaffold.log
 platanus gap_close -t 1 -c out_scaffold.fa -IP1 subpe1.fq.trimmed subpe2.fq.trimmed -OP2 submp1.fq.int_trimmed submp2.fq.int_trimmed 2> gapclose.log
 
+more out_scaffold.fa
+echo scaffold1_len3832127_cov231 > name
+seqtk subseq out_scaffold.fa name > longest.fa
+
+rm name
+
 more out_gapClosed.fa
 echo scaffold1_cov231 > name
-seqtk subseq out_gapClosed.fa name > longest.fa
+seqtk subseq out_gapClosed.fa name > longest_closed.fa
 ```
 ### Скриншоты
 **Важно: исходные .html файлы с полной статистикой находятся в папке data**
