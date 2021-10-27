@@ -1,7 +1,7 @@
 # Домашнее задание №1
 ## Часть 1
 ### Используемые команды
-
+***Рассчётная часть произведена на Python. Результаты лежат в .ipynb файле в папке src***
 ```
 mkdir hw_1
 cd hw_1/
@@ -73,3 +73,93 @@ seqtk subseq out_gapClosed.fa name > longest_closed.fa
 ![Screenshot from 2021-10-26 13-04-46](https://user-images.githubusercontent.com/60858323/138953186-f988e467-6806-4e77-a25e-1f7b4757d8aa.png)
 ![Screenshot from 2021-10-26 13-05-05](https://user-images.githubusercontent.com/60858323/138953188-46f9ae3d-c19e-412b-a277-51d2bbbfa601.png)
 ![Screenshot from 2021-10-26 13-05-19](https://user-images.githubusercontent.com/60858323/138953190-cd1d41f8-1874-4e67-acdc-c003f480028d.png)
+
+## Часть 2
+### Используемые команды
+```
+cd ~/hw_1
+mkdir part80
+mkdir part60
+mkdir part40
+mkdir part20
+
+cd part80
+
+ls /usr/share/data-minor-bioinf/assembly/* | xargs -tI{} ln -s {}
+
+seqtk sample -s1016 oil_R1.fastq 4000000 > subpe1_80.fq
+seqtk sample -s1016 oil_R2.fastq 4000000 > subpe2_80.fq
+seqtk sample -s1016 oilMP_S4_L001_R1_001.fastq 1200000 > submp1_80.fq
+seqtk sample -s1016 oilMP_S4_L001_R2_001.fastq 1200000 > submp2_80.fq
+
+platanus_trim subpe1_80.fq subpe2_80.fq
+platanus_internal_trim submp1_80.fq submp2_80.fq
+
+platanus assemble -t 1 -f subpe1_80.fq.trimmed subpe2_80.fq.trimmed 2> assemble.log
+platanus scaffold -t 1 -c out_contig.fa -IP1 subpe1_80.fq.trimmed subpe2_80.fq.trimmed -OP2 submp1_80.fq.int_trimmed submp2_80.fq.int_trimmed 2> scaffold.log
+platanus gap_close -t 1 -c out_scaffold.fa -IP1 subpe1_80.fq.trimmed subpe2_80.fq.trimmed -OP2 submp1_80.fq.int_trimmed submp2_80.fq.int_trimmed 2> gapclose.log
+
+more out_scaffold.fa
+echo scaffold1_len3836315_cov184 > name
+seqtk subseq out_scaffold.fa name > longest80.fa
+
+rm name
+
+more out_gapClosed.fa
+echo scaffold1_cov184 > name
+seqtk subseq out_gapClosed.fa name > longest_closed80.fa
+
+cd ../part60
+
+ls /usr/share/data-minor-bioinf/assembly/* | xargs -tI{} ln -s {}
+
+seqtk sample -s1016 oil_R1.fastq 3000000 > subpe1_60.fq
+seqtk sample -s1016 oil_R2.fastq 3000000 > subpe2_60.fq
+seqtk sample -s1016 oilMP_S4_L001_R1_001.fastq 900000 > submp1_60.fq
+seqtk sample -s1016 oilMP_S4_L001_R2_001.fastq 900000 > submp2_60.fq
+
+platanus_trim subpe1_60.fq subpe2_60.fq
+platanus_internal_trim submp1_60.fq submp2_60.fq
+
+platanus assemble -t 1 -f subpe1_60.fq.trimmed subpe2_60.fq.trimmed 2> assemble.log
+platanus scaffold -t 1 -c out_contig.fa -IP1 subpe1_60.fq.trimmed subpe2_60.fq.trimmed -OP2 submp1_60.fq.int_trimmed submp2_60.fq.int_trimmed 2> scaffold.log
+platanus gap_close -t 1 -c out_scaffold.fa -IP1 subpe1_60.fq.trimmed subpe2_60.fq.trimmed -OP2 submp1_60.fq.int_trimmed submp2_60.fq.int_trimmed 2> gapclose.log
+
+
+more out_scaffold.fa
+echo scaffold2_len3831102_cov140 > name
+seqtk subseq out_scaffold.fa name > longest60.fa
+
+rm name
+
+more out_gapClosed.fa
+echo scaffold1_cov71 > name
+seqtk subseq out_gapClosed.fa name > longest_closed60.fa
+
+cd ../part40
+
+ls /usr/share/data-minor-bioinf/assembly/* | xargs -tI{} ln -s {}
+
+seqtk sample -s1016 oil_R1.fastq 2000000 > subpe1_40.fq
+seqtk sample -s1016 oil_R2.fastq 2000000 > subpe2_40.fq
+seqtk sample -s1016 oilMP_S4_L001_R1_001.fastq 600000 > submp1_40.fq
+seqtk sample -s1016 oilMP_S4_L001_R2_001.fastq 600000 > submp2_40.fq
+
+platanus_trim subpe1_40.fq subpe2_40.fq
+platanus_internal_trim submp1_40.fq submp2_40.fq
+
+platanus assemble -t 1 -f subpe1_40.fq.trimmed subpe2_40.fq.trimmed 2> assemble.log
+platanus scaffold -t 1 -c out_contig.fa -IP1 subpe1_40.fq.trimmed subpe2_40.fq.trimmed -OP2 submp1_40.fq.int_trimmed submp2_40.fq.int_trimmed 2> scaffold.log
+platanus gap_close -t 1 -c out_scaffold.fa -IP1 subpe1_40.fq.trimmed subpe2_40.fq.trimmed -OP2 submp1_40.fq.int_trimmed submp2_40.fq.int_trimmed 2> gapclose.log
+
+more out_scaffold.fa
+echo scaffold1_len3822028_cov91 > name
+seqtk subseq out_scaffold.fa name > longest40.fa
+
+rm name
+
+more out_gapClosed.fa
+echo scaffold1_cov91 > name
+seqtk subseq out_gapClosed.fa name > longest_closed40.fa
+```
+![stats](https://user-images.githubusercontent.com/60858323/139140457-62a435e0-bb9e-4b39-a90c-1697aa8a7511.jpg)
