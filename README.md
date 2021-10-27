@@ -162,4 +162,5 @@ more out_gapClosed.fa
 echo scaffold1_cov91 > name
 seqtk subseq out_gapClosed.fa name > longest_closed40.fa
 ```
-![stats](https://user-images.githubusercontent.com/60858323/139140457-62a435e0-bb9e-4b39-a90c-1697aa8a7511.jpg)
+
+![stats](https://user-images.githubusercontent.com/60858323/139141108-d6c2bd05-42a2-4dac-a9d7-e55a4a6c19e6.jpg)
