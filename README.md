@@ -16,8 +16,6 @@ seqtk sample -s1016 oilMP_S4_L001_R2_001.fastq 1500000 > submp2.fq
 mkdir fastqc
 ls *.fq | xargs -P 1 -tI{} fastqc -o fastqc {}
 
-scp -i mykey -P 32222 avshmelev@92.242.58.92:~/hw_1/multiqc/multiqc_report.html ~/hw_1/
-
 platanus_trim subpe1.fq subpe2.fq
 platanus_internal_trim submp1.fq submp2.fq
 
